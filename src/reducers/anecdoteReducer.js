@@ -30,8 +30,8 @@ const reducer = (state = initialState, action) => {
       const an = {...anToChange, votes: anToChange.votes +1}
       console.log('test:', an)
       return state.map(x => x.id !== an.id ? x : an)
-    case 'OK':
-      return { ...state, ok: state.ok +1}
+    case 'NEW':
+      return state.concat(asObject(action.anecdote))
     default: return state
   }
 }
