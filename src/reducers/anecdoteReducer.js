@@ -1,3 +1,5 @@
+import { act } from "react-dom/test-utils"
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -22,8 +24,16 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
-
-  return state
+  switch (action.type) {
+    case 'Vote':
+      const anToChange = state.find(a => a.id  === action.id)
+      const an = {...anToChange, votes: anToChange.votes +1}
+      console.log('test:', an)
+      return state.map(x => x.id !== an.id ? x : an)
+    case 'OK':
+      return { ...state, ok: state.ok +1}
+    default: return state
+  }
 }
 
 export default reducer
